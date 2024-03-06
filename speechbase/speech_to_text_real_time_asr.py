@@ -14,7 +14,7 @@ import json
 import threading
 import time
 from functools import partial
-import const
+from common import const
 from text_to_speech import BaiduTTS
 from chatbase.openai_chat import chat
 
@@ -89,7 +89,7 @@ class SpeechRecognitionClient:
         message_json = json.loads(message)
         if message_json["type"] == "FIN_TEXT":
             print(message_json["result"])
-            baidu_tts = BaiduTTS(const.APPID,const.APPKEY,const.SECRETKEY)
+            baidu_tts = BaiduTTS(const.APPID, const.APPKEY, const.SECRETKEY)
             reply = chat.chat_with_origin_model(message_json["result"])
             if reply != None:
                 asyncio.run(baidu_tts.text_to_speech_and_play(reply))
@@ -118,7 +118,6 @@ class SpeechRecognitionClient:
         r = sr.Recognizer()
 
         with sr.Microphone(sample_rate=rate) as source:
-            print('请开始说话')
             try:
                 audio = r.listen(source, timeout=10, phrase_time_limit=5)
             except:

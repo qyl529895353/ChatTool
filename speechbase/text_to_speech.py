@@ -6,6 +6,8 @@ File: text_to_speech.py
 Software: PyCharm
 """
 import os
+import time
+
 import pyttsx3
 import pygame
 from aip import AipSpeech
@@ -68,7 +70,7 @@ class BaiduTTS:
             'per': 4
         })
 
-        file_audio ="./audio3.mp3"
+        file_audio ="./audio%s.mp3"%time.time()
         if not isinstance(result, dict):
             with open(file_audio, "wb") as f:
                 f.write(result)
@@ -77,7 +79,6 @@ class BaiduTTS:
         self.play_audio(file_audio)
 
     def play_audio(self, audio_file_path):
-        print(audio_file_path)
         pygame.mixer.init()
         pygame.mixer.music.load(audio_file_path)
         pygame.mixer.music.play()
@@ -88,8 +89,8 @@ class BaiduTTS:
             os.remove(audio_file_path)
 
 if __name__=="__main__":
-    from pipertool.piper_config_path import config_path
-    import const
+    from common import const
+
     # piper_tts = PiperTTS()
     # tool_path = config_path['piper_path']
     # model_path = config_path["model_joe_path"]
@@ -106,5 +107,5 @@ if __name__=="__main__":
     # pytts = Pyttsx3TTS()
     # pytts.text_to_speech_and_play("text_to_speech_and_play")
 
-    baidu_tts = BaiduTTS(str(const.APPID),const.APPKEY,const.SECRETKEY)
+    baidu_tts = BaiduTTS(str(const.APPID), const.APPKEY, const.SECRETKEY)
     baidu_tts.text_to_speech_and_play("今天是几月几号")

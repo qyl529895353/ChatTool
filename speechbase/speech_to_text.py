@@ -5,7 +5,7 @@ Time: 2023/12/5 15:45
 File: speech_to_text.py
 Software: PyCharm
 """
-import const
+from common import const
 from aip import AipSpeech
 import speech_recognition as sr
 class BaiduASR:
@@ -20,7 +20,6 @@ class BaiduASR:
 
     def get_record(self, is_get_audio: bool = False, rate=16000,file_name="./speech.wav"):
         with sr.Microphone(sample_rate=rate) as source:
-            print('请开始说话')
             try:
                 audio = self.r.listen(source, timeout=10, phrase_time_limit=5)
             except:
@@ -44,6 +43,7 @@ class BaiduASR:
     def speech_to_text(self, audio_path: str = "test.wav", is_mic: bool = True, mic_file="./speech.wav"):
         # 麦克风输入
         if is_mic:
+            print("麦克输入")
             info = self.get_record(is_get_audio=False,file_name=mic_file)
             if info == None:
                 return "语音识别失败："
@@ -62,6 +62,5 @@ class BaiduASR:
             return result['result'][0]
 
 if __name__ == "__main__":
-    import const
-    obj = BaiduASR(const.APPID,const.APPKEY,const.SECRETKEY)
+    obj = BaiduASR(const.APPID, const.APPKEY, const.SECRETKEY)
     print(obj.speech_to_text(mic_file='test1.wav'))
