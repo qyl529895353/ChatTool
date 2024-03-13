@@ -29,5 +29,6 @@
 ### PS：仅用于学习和交流
 
 # LLM langchain pdf摘要
+    目录：my_langchain
     没有用到离线模型，用的open ai Api接口,需获取 api key
     启动命令：streamlist run ./main.py
